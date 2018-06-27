@@ -7,7 +7,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <esri:MapView Map="{x:Bind ViewModel.Map, Mode=OneWay}" />
+    <Grid>
+        <esri:MapView x:Name="MyMapView"
+                      Map="{Binding Map, Source={StaticResource MapViewModel}}">
+            <esri:MapView.GraphicsOverlays>
+                <esri:GraphicsOverlay/>
+            </esri:MapView.GraphicsOverlays>
+        </esri:MapView>
+        <Border Background="White" BorderBrush="Black" BorderThickness="1"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="15" Padding="10"
+                Width="325">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBox x:Name="AddressTextBox"
+                         Grid.Row="0"
+                         Margin="0,5"
+                         TextChanged="AddressTextChanged" />
+                <ListBox x:Name="SuggestionList"
+                         Grid.Row="1"
+                         Height="150"
+                         ItemsSource="{Binding AddressSuggestions, Source={StaticResource MapViewModel}}"
+                         DisplayMemberPath="Label"
+                         SelectionChanged="SuggestionChosen" />
+            </Grid>
+        </Border>
     </Grid>
 </Page>
